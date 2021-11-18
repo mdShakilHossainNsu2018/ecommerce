@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class='row'>
+        <div class='col-12 col-md-6 mx-auto'>
+            <h1>Order {{ object.order_id }}</h1>
+            <hr/>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-12 col-md-6 mx-auto'>
+
+            {% for product in object.cart.products.all %}
+                <div class="card">
+                    <div class="p-3">
+                        <div class="d-flex">
+                            <div>
+                                <img src="{{ product.image.url }}" width="150px" height="150px" alt="product image">
+                            </div>
+                            <div class="ml-3">
+                                <h3>{{ product }}</h3>
+                                <h6>brand: {{ product.brand }}</h6>
+                                <h6>price: {{ product.price }}</h6>
+                                {% if object.get_status == "Shipped" %}
+                                    <a class="btn btn-info mt-3" href="{% url "reviews:create" product.id %}">give a
+                                        review</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <p>Shipping Address: {{ object.shipping_address_final }}</p>
+            <p>Billing Address: {{ object.billing_address_final }}</p>
+            <p>Subtotal: {{ object.cart.total }}</p>
+            <p>Shipping Total: {{ object.shipping_total }}</p>
+            <p>Order Total: {{ object.total }}</p>
+            <p>Order Status: {{ object.get_status }}</p>
+        </div>
+    </div>
+{% endblock %}

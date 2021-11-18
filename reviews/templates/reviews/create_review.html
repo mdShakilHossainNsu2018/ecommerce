@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Write Review</h1>
+
+    <div class="card">
+        <div class="d-flex p-3">
+            <img src="{{ product.image.url }}" height="300px" width="300px" alt="">
+            <div class="pl-5">
+                <h3>{{ product.title }}</h3>
+                <h5>৳ {{ product.price }}</h5>
+                <h5>{{ product.brand }}</h5>
+
+                <form  method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+
+
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

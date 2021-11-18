@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col">
+            <img class="big-image" src="{% static "img/big_logo.png" %}" alt="logo">
+        </div>
+        <div class="col">
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <!-- Tabs Titles -->
+
+                    <!-- Icon -->
+                    <div class="fadeIn first">
+                        <h1>Create account</h1>
+                    </div>
+
+                    <!-- Login Form -->
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_table }}
+                        <input type="submit" class="fadeIn fourth login_button" value="Create account">
+                    </form>
+
+                    <!-- Remind Passowrd -->
+                    <div id="formFooter">
+                        <a href="{% url "login" %}">Already have an account</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

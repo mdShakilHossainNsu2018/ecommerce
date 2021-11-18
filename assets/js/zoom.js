@@ -1,0 +1,1 @@
+$('.picZoomer').picZoomer();

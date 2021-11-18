@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {#    <div class='col-10 col-md-6 mx-auto'>#}
+    {#        <h1>Add Payment Method</h1>#}
+    {#        <div class='stripe-payment-form' data-token='{{ publish_key }}'#}
+    {#             data-next-url='{% if next_url %}{{ next_url }}{% endif %}' data-btn-title='Add New Card'></div>#}
+    {#    </div>#}
+
+    <div class="row">
+
+        <div class="col">
+            <img src="{% static "img/add_cradit_card.png" %}" width="600px" alt="Add cradit card png">
+        </div>
+        <div class="col">
+            <div class="card mt-5">
+                <div>
+
+                    <h2 class="card-header">Add your card</h2>
+                    <div class='stripe-payment-form p-3' data-token='{{ publish_key }}'
+                         data-next-url='{% if next_url %}{{ next_url }}{% endif %}' data-btn-title='Add New Card'></div>
+                    {#                    <div class='stripe-payment-form p-3' data-token='{{ publish_key }}'#}
+                    {#                         data-next-url='{{ request.build_absolute_uri }}'#}
+                    {#                         data-btn-title='Add Payment Method'></div>#}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+<form method='POST' action='{% if action_url %}{{ action_url }}{% else %}{% url "login" %}{% endif %}'> {% csrf_token %}
+    {% if next_url %}
+        <input type='hidden' name='next' value='{{ next_url }}'/>
+    {% endif %}
+
+    {% if address_type %}
+        <input type='hidden' name='address_type' value='{{ address_type }}'/>
+    {% endif %}
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <h1>Address Form</h1>
+            </div>
+            {{ form.as_p }}
+            <div class="d-flex justify-content-end">
+                <button type='submit' class='btn btn-primary mb-4 mr-4'>Submit</button>
+            </div>
+        </div>
+    </div>
+
+</form>

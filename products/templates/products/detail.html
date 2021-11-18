@@ -1,0 +1,89 @@
+{#{% load static %}#}
+{% extends "base.html" %}
+{% block content %}
+    <div class="card">
+        <div class="row p-5">
+            <div class="col">
+                {% if object.image %}
+                    <div class="picZoomer">
+                        <img src='{{ object.image.url }}' class="rounded" width="500px" height="500px" alt="desc"/>
+                    </div>
+
+                {% endif %}
+            </div>
+            <div class="col">
+                <div class="d-flex flex-column justify-between" style="height: 31rem;">
+                    <div class="mb-auto">
+                        <h1>{{ object.title|truncatewords:20 }}</h1>
+                        {{ object.timestamp|timesince }} ago
+                        {{ object.description|linebreaks|truncatewords:80 }}<br/>
+                        <h3>Brand: {{ object.brand }}</h3>
+                        <h3>Category: {{ object.category }}</h3>
+                        <h3 class="pdp-price_color_orange">Price: ৳{{ object.price }}</h3>
+
+                        <p class="card-text pdp-price_color_orange">
+                            {% with ''|center:object.get_avg_rating as range %}
+                                {% for _ in range %}
+                                    <span>⭐</span>
+                                    {% empty %}
+                                    No review
+                                {% endfor %}
+                            {% endwith %}
+                            ({{ object.review_set.all.count }})</p>
+                    </div>
+                    <div>
+
+                        {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+
+        <div class="p-3">
+            <h3>Review</h3>
+            {% for review in object.review_set.all %}
+                <div class="card">
+                <div class="p-3">
+                         <div class="d-flex text-center">
+                        <b>{{ review.user }}</b>
+                        <p class="ml-4">{{ review.timestamp }}</p>
+                    </div>
+                    <p class="card-text pdp-price_color_orange">
+                        {% with ''|center:review.rating as range %}
+                            {% for _ in range %}
+                                <span>⭐</span>
+                                {% empty %}
+                                No review
+                            {% endfor %}
+                        {% endwith %}
+                    </p>
+                    {#                {{ review.rating }}#}
+                   <h4>{{ review.review }}</h4>
+                    {% if review.image %}
+                        <img class="rounded"  style="max-width: 50rem; max-height:25rem;" src="{{ review.image.url }}" alt="Review Image">
+                    {% endif %}
+                </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="card my-5">
+        {% for file in product_files %}
+            {#    {{ file }}#}
+            <img src='{{ file.file.url }}' class="rounded m-3" alt="desc"/>
+        {% endfor %}
+    </div>
+
+    {#    <div class='col-12 col-md-6'>#}
+    {#       #}
+    {#    </div>#}
+
+
+
+{% endblock %}

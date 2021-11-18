@@ -1,0 +1,31 @@
+{% load static %}
+<div class="card" style="width: 300px;">
+    {% if instance.image %}
+        <a href="{{ instance.get_absolute_url }}">
+            <img class="card-img-top products-list-img"
+                 src="{{ instance.image.url }}"
+                 alt="{{ instance.title }} logo"></a>
+    {% endif %}
+    <div class="card-body">
+        <a href="{{ instance.get_absolute_url }}">
+            <h4 class="card-title">{{ instance.title }}</h4>
+        </a>
+
+        {#        <p>{{ instance.description|linebreaks|truncatewords:14 }}</p>#}
+
+        <p class="card-text pdp-price_color_orange"><span>৳</span> {{ instance.price }}</p>
+{#        {{ instance.get_avg_rating }}#}
+
+        <p class="card-text pdp-price_color_orange">
+        {% with ''|center:instance.get_avg_rating as range %}
+            {% for _ in range %}
+            <span>⭐</span>
+                {% empty %}
+                No review
+            {% endfor %}
+        {% endwith %}
+
+            ({{ instance.review_set.all.count }})</p>
+        <!--  <a href="{% url 'products:detail' slug=instance.slug  %}" class="btn btn-warning">URL shortcut</a> -->
+    </div>
+</div>
