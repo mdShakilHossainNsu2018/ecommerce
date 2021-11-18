@@ -1,18 +1,36 @@
 {% extends "base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
 {% block content %}
-<div class='row'>
-    <div class="col-12 text-center py-5">
+    <div class='row'>
+        <div class="col-12 text-center py-5">
             {% if key %}
                 <h1 class='my-5 py-5'>Activation Error. Please try again.</h1>
             {% else %}
                 <h1 class='my-5 py-5'>Re-activate your Email Below.</h1>
             {% endif %}
-      </div>
+        </div>
         <div class="col-12 text-center">
-            <form method='POST' action=''>{% csrf_token %}
-                {{ form.as_p }}
-                <input class='btn btn-default' type='submit' value='Resend Activation' />
-            </form>
-      </div>
-</div>
+            <div class="card">
+                <div class="p-3">
+                    <form method='POST' action=''>{% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input class='btn btn-default' type='submit' value='Resend Activation'/>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

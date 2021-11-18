@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'whitenoise.runserver_nostatic',
+    'bootstrap5',
 
     # third party
     # 'storages',
@@ -130,7 +131,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 db_from_env = dj_database_url.config()  # postgreSQL Database in heroku
 DATABASES['default'].update(db_from_env)

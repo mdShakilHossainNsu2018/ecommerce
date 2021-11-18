@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Address
+from .models import Address, ADDRESS_TYPES
 
 
 class AddressForm(forms.ModelForm):
@@ -15,6 +15,13 @@ class AddressForm(forms.ModelForm):
     name = forms.CharField(label='',
                            widget=forms.TextInput(attrs={'class': 'fadeIn first login_input',
                                                          "placeholder": "Enter Your Name."}))
+
+    address_type = forms.CharField(label="", widget=forms.Select(
+        choices=ADDRESS_TYPES,
+        attrs={'class': 'fadeIn first login_input',
+               "placeholder": "Enter Your Name."}
+    ))
+
     address_line_1 = forms.CharField(label='',
                                      widget=forms.TextInput(attrs={'class': 'fadeIn first login_input',
                                                                    "placeholder": "Address line 1"}))

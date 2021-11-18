@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
 {% block content %}
 
     {#    <div class='row'>#}
@@ -17,7 +27,8 @@
                             <h1>Update Address</h1>
                         </div>
                         <form method='POST' action=''> {% csrf_token %}
-                            {{ form.as_p }}
+                            {% bootstrap_form form %}
+{#                            {{ form.as_p }}#}
                             <div class="d-flex justify-content-end">
                                 <button type='submit' class='btn btn-primary mb-4 mr-4'>Save Address</button>
                             </div>
@@ -40,7 +51,7 @@
                             <h1>Create Address</h1>
                         </div>
                         <form method='POST' action=''> {% csrf_token %}
-                            {{ form.as_p }}
+                            {% bootstrap_form form %}
                             <div class="d-flex justify-content-end">
                                 <button type='submit' class='btn btn-primary mb-4 mr-4'>Save Address</button>
                             </div>
