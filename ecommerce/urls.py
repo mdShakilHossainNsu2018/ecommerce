@@ -70,6 +70,9 @@ urlpatterns = [
     path('review/', include("reviews.urls")),
 ]
 
+admin.site.site_header = "Daffodil Ecommerce Admin"
+admin.site.site_title = "Daffodil Ecommerce Admin"
+admin.site.index_title = "Welcome to Daffodil Ecommerce Admin Portal"
 
 if settings.DEBUG:
     # print(settings.STATIC_ROOT)
