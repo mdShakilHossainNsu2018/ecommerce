@@ -75,6 +75,5 @@ admin.site.site_title = "Daffodil Ecommerce Admin"
 admin.site.index_title = "Welcome to Daffodil Ecommerce Admin Portal"
 
 if settings.DEBUG:
-    # print(settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
