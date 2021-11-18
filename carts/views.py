@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+from sslcommerz_lib import SSLCOMMERZ
 
 from accounts.forms import LoginForm, GuestForm
 from accounts.models import GuestEmail
@@ -20,6 +20,7 @@ STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_cu1lQmcg1OLf
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
 stripe.api_key = STRIPE_SECRET_KEY
 
+ssl_settings = {'store_id': 'daffo61966d027905e', 'store_pass': 'tom2jery', 'issandbox': False}
 
 
 def cart_detail_api_view(request):
@@ -33,6 +34,7 @@ def cart_detail_api_view(request):
             for x in cart_obj.products.all()]
     cart_data  = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
     return JsonResponse(cart_data)
+
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -69,7 +71,6 @@ def cart_update(request):
     return redirect("cart:home")
 
 
-
 def checkout_home(request):
     cart_obj, cart_created = Cart.objects.new_or_get(request)
     order_obj = None
@@ -82,7 +83,6 @@ def checkout_home(request):
     billing_address_id = request.session.get("billing_address_id", None)
 
     shipping_address_required = not cart_obj.is_digital
-
 
     shipping_address_id = request.session.get("shipping_address_id", None)
 
@@ -135,13 +135,35 @@ def checkout_home(request):
     return render(request, "carts/checkout.html", context)
 
 
-
-
-
-
-
 def checkout_done_view(request):
     return render(request, "carts/checkout-done.html", {})
+
+
+def ssl_get_start_session(request):
+    sslcz = SSLCOMMERZ(ssl_settings)
+    post_body = {}
+    post_body['total_amount'] = 100.26
+    post_body['currency'] = "BDT"
+    post_body['tran_id'] = "12345"
+    post_body['success_url'] = "your success url"
+    post_body['fail_url'] = "your fail url"
+    post_body['cancel_url'] = "your cancel url"
+    post_body['emi_option'] = 0
+    post_body['cus_name'] = "test"
+    post_body['cus_email'] = "test@test.com"
+    post_body['cus_phone'] = "01700000000"
+    post_body['cus_add1'] = "customer address"
+    post_body['cus_city'] = "Dhaka"
+    post_body['cus_country'] = "Bangladesh"
+    post_body['shipping_method'] = "NO"
+    post_body['multi_card_name'] = ""
+    post_body['num_of_item'] = 1
+    post_body['product_name'] = "Test"
+    post_body['product_category'] = "Test Category"
+    post_body['product_profile'] = "general"
+
+    response = sslcz.createSession(post_body)  # API response
+    print(response)
 
 
 

@@ -17,11 +17,12 @@
     {% if address_type %}
         <input type='hidden' name='address_type' value='{{ address_type }}'/>
     {% endif %}
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
+    <div class="card">
+        <div class="px-5">
             <div class="fadeIn first">
-                <h1>Address Form</h1>
+                <h1>{{ address_type|title }} Form</h1>
             </div>
+
             {% bootstrap_form form %}
             <div class="d-flex justify-content-end">
                 <button type='submit' class='btn btn-primary mb-4 mr-4'>Submit</button>

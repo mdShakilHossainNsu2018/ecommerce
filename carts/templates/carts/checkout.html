@@ -23,7 +23,7 @@
 
             <div class='row'>
                 <div class='col-12'>
-                    <p class='lead'>Shipping Address</p>
+                    <h1>Shipping Address</h1>
                     <hr/>
                 </div>
                 <div class='col-6'>
@@ -43,7 +43,7 @@
         {% elif not object.billing_address %}
             <div class='row'>
                 <div class='col-12'>
-                    <p class='lead'>Billing Address</p>
+                    <h1>Billing Address</h1>
                     <hr/>
                 </div>
                 <div class='col-6'>
@@ -55,10 +55,11 @@
                     {% url 'checkout_address_reuse' as checkout_address_reuse %}
                     {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='billing' action_url=checkout_address_reuse %}
                 </div>
-
-
             </div>
         {% else %}
+
+            {#            payment start            #}
+
             {% if not has_card %}
                 <!-- enter credit card here -->
                 <div class="row">
@@ -69,27 +70,45 @@
                     <div class="col">
                         <div class="card mt-5">
                             <div>
-
                                 <h2 class="card-header">Add your card</h2>
                                 <div class='stripe-payment-form p-3' data-token='{{ publish_key }}'
                                      data-next-url='{{ request.build_absolute_uri }}'
                                      data-btn-title='Add Payment Method'></div>
+                                <div class="px-3 d-flex">
+                                    <div>
+                                        <h2>Secured by: <img src="{% static 'img/stripe.png' %}" height="100"
+                                                             width="100" alt=""></h2>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
 
+                        <div class="p-3">
+                            <div class="card">
+                                <h1 class="text-center" >Other Options</h1>
+                                <div class="py-3">
+                                    <div class="d-flex justify-content-center">
+                                        <img class="btn btn-primary" height="300" width="300"
+                                             src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-04.png"
+                                             alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#                        <button class="your-button-class" id="sslczPayBtn"#}
+                        {#                                token="if you have any token validation"#}
+                        {#                                postdata="your javascript arrays or objects which requires in backend"#}
+                        {#                                order="If you already have the transaction generated for current order"#}
+                        {#                                endpoint="An URL where backend code will initiate the payment to SSLCOMMERZ"> Pay Now#}
+                        {#                        </button>#}
+
                     </div>
-
-
                 </div>
-
-
             {% else %}
                 <div class="card">
-
                     <div class="p-3">
                         <h1 class="card-header mb-3">Finalize Checkout</h1>
-
                         <p>Cart Items:
                             {% for product in object.cart.products.all %}{{ product }}{% if not forloop.last %},
                             {% endif %}{% endfor %}</p>
@@ -118,4 +137,17 @@
 
         {% endif %}
     {% endif %}
+
+    {#    <script>#}
+    {#        (function (window, document) {#}
+    {#            var loader = function () {#}
+    {#                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];#}
+    {#                script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);#}
+    {#                tag.parentNode.insertBefore(script, tag);#}
+    {#            };#}
+    {##}
+    {#            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);#}
+    {#        })(window, document);#}
+    {#    </script>#}
+
 {% endblock %}
