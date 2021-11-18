@@ -25,7 +25,7 @@
                             {% with ''|center:object.get_avg_rating as range %}
                                 {% for _ in range %}
                                     <span>⭐</span>
-                                    {% empty %}
+                                {% empty %}
                                     No review
                                 {% endfor %}
                             {% endwith %}
@@ -45,27 +45,28 @@
         <div class="p-3">
             <h3>Review</h3>
             {% for review in object.review_set.all %}
+            {% empty %}
+                <h4>No review</h4>
                 <div class="card">
-                <div class="p-3">
-                         <div class="d-flex text-center">
-                        <b>{{ review.user }}</b>
-                        <p class="ml-4">{{ review.timestamp }}</p>
+                    <div class="p-3">
+                        <div class="d-flex text-center">
+                            <b>{{ review.user }}</b>
+                            <p class="ml-4">{{ review.timestamp }}</p>
+                        </div>
+                        <p class="card-text pdp-price_color_orange">
+                            {% with ''|center:review.rating as range %}
+                                {% for _ in range %}
+                                    <span>⭐</span>
+                                {% endfor %}
+                            {% endwith %}
+                        </p>
+                        {#                {{ review.rating }}#}
+                        <h4>{{ review.review }}</h4>
+                        {% if review.image %}
+                            <img class="rounded" style="max-width: 50rem; max-height:25rem;"
+                                 src="{{ review.image.url }}" alt="Review Image">
+                        {% endif %}
                     </div>
-                    <p class="card-text pdp-price_color_orange">
-                        {% with ''|center:review.rating as range %}
-                            {% for _ in range %}
-                                <span>⭐</span>
-                                {% empty %}
-                                No review
-                            {% endfor %}
-                        {% endwith %}
-                    </p>
-                    {#                {{ review.rating }}#}
-                   <h4>{{ review.review }}</h4>
-                    {% if review.image %}
-                        <img class="rounded"  style="max-width: 50rem; max-height:25rem;" src="{{ review.image.url }}" alt="Review Image">
-                    {% endif %}
-                </div>
                 </div>
 
             {% endfor %}
