@@ -29,7 +29,7 @@ EMAIL_HOST_PASSWORD = 'ecommarceedu2pass'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommarceedu@gmail.com>'
-BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'https://deffodilecommerce.herokuapp.com'
 
 MANAGERS = (
     ('Ecommarce', "ecommarceedu@gmail.com"),
