@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if not billing_profile %}
+        <div class='row text-center'>
+            <div class='col-12 col-md-6'>
+                {#        <p class='lead'>Login</p>#}
+                {% include 'carts/snippets/checkout_login.html' with form=login_form next_url=request.build_absolute_uri %}
+            </div>
+            <div class='col-12 col-md-6'>
+                {#        Continue as Guest#}
+
+                {% url "guest_register" as guest_register_url %}
+                {% include 'carts/snippets/checkout_as_guest.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+            </div>
+        </div>
+
+    {% else %}
+
+        {% if not object.shipping_address and shipping_address_required %}
+
+            <div class='row'>
+                <div class='col-12'>
+                    <h1>Shipping Address</h1>
+                    <hr/>
+                </div>
+                <div class='col-6'>
+
+                    {% url "checkout_address_create" as checkout_address_create %}
+                    {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}'
+
+
+                </div>
+                <div class='col-6'>
+                    {% url 'checkout_address_reuse' as checkout_address_reuse %}
+                    {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='shipping' action_url=checkout_address_reuse %}
+                </div>
+            </div>
+
+
+        {% elif not object.billing_address %}
+            <div class='row'>
+                <div class='col-12'>
+                    <h1>Billing Address</h1>
+                    <hr/>
+                </div>
+                <div class='col-6'>
+
+                    {% url "checkout_address_create" as checkout_address_create %}
+                    {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='billing' %}
+                </div>
+                <div class='col-6'>
+                    {% url 'checkout_address_reuse' as checkout_address_reuse %}
+                    {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='billing' action_url=checkout_address_reuse %}
+                </div>
+            </div>
+        {% else %}
+
+            {#            payment start            #}
+
+            <!-- enter credit card here -->
+            <div class="row">
+
+                <div class="col">
+                    <img src="https://securepay.sslcommerz.com/public/image/SSLCommerz-Pay-With-logo-All-Size-04.png"
+                         width="600px" height="600" alt="Add cradit card png">
+                </div>
+                <div class="col">
+
+                    <div class="card">
+                        <div class="p-3">
+                            <h1 class="card-header mb-3">Finalize Checkout</h1>
+                            <p>Cart Items:
+                                {% for product in object.cart.products.all %}{{ product }}{% if not forloop.last %},
+                                {% endif %}{% endfor %}</p>
+                            <hr>
+                            <p>Shipping Address: {{ object.shipping_address_final }}</p>
+                            <hr>
+                            <p>Billing Address: {{ object.billing_address_final }}</p>
+                            <hr>
+                            <p>Cart Total: ৳ {{ object.cart.total }}</p>
+                            <hr>
+                            <p>Shipping Total: ৳ {{ object.shipping_total }}</p>
+                            <hr>
+                            <p>Order Total: ৳ {{ object.total }}</p>
+                            <hr>
+                            <form method='POST' action="{% url 'cart:ssl_save' %}" >
+                                {% csrf_token %}
+                                <input type="hidden" name="order" value="{{object}}">
+                                <input type="hidden" name="billing_profile" value="{{billing_profile}}">
+                                <button type='submit' class='btn btn-success'>Checkout</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

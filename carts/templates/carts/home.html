@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-{#    <h1>Cart</h1>#}
+    {#    <h1>Cart</h1>#}
 
     {% if cart.products.exists %}
         <h1>Product list</h1>
@@ -48,7 +48,9 @@
             </tr>
             <tr>
                 <td colspan="2"></td>
-                <td><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Checkout</a></td>
+                <td><a class='btn  btn-success' href='{% url "cart:checkout" %}'>Using Card</a>
+                    <a class='btn btn-info' href='{% url "cart:others-checkout" %}'>Others</a>
+                </td>
             </tr>
 
             </tbody>
@@ -60,7 +62,7 @@
         </div>
 
     {% else %}
-        <h1 >Cart is empty</h1>
+        <h1>Cart is empty</h1>
         <img src="{% static 'img/empty_cart.png' %}" alt="">
     {% endif %}
 

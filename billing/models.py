@@ -185,6 +185,24 @@ class ChargeManager(models.Manager):
         return new_charge_obj.paid, new_charge_obj.seller_message
 
 
+    # def do_ssl(self, billing_profile, order_obj, ):  # Charge.objects.do()
+    #
+    #     new_charge_obj = self.model(
+    #         billing_profile=billing_profile,
+    #         stripe_id=c.id,
+    #         paid=c.paid,
+    #         refunded=c.refunded,
+    #         outcome=c.outcome,
+    #         outcome_type=c.outcome['type'],
+    #         seller_message=c.outcome.get('seller_message'),
+    #         risk_level=c.outcome.get('risk_level'),
+    #     )
+    #     new_charge_obj.save()
+    #     return new_charge_obj.paid, new_charge_obj.seller_message
+
+
+
+
 class Charge(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
     stripe_id = models.CharField(max_length=120)

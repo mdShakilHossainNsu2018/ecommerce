@@ -29,7 +29,7 @@ EMAIL_HOST_PASSWORD = 'ecommarceedu2pass'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommarceedu@gmail.com>'
-BASE_URL = '127.0.0.1:8000'
+BASE_URL = 'http://127.0.0.1:8000'
 
 MANAGERS = (
     ('Ecommarce', "ecommarceedu@gmail.com"),
@@ -41,7 +41,7 @@ ADMINS = MANAGERS
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
     'whitenoise.runserver_nostatic',
     'bootstrap5',
+    "corsheaders",
 
     # third party
     # 'storages',
@@ -90,6 +91,9 @@ STRIPE_PUB_KEY = os.environ.get("STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTT
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    "corsheaders.middleware.CorsMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -201,3 +205,10 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# store_id
+STORE_ID = "daffo61966d027905e"
+# store_pass
+STORE_PASS = "daffo61966d027905e@ssl"
+
+# BASE_URL = "http://localhost:8000/"
