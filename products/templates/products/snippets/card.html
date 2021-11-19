@@ -14,16 +14,18 @@
         {#        <p>{{ instance.description|linebreaks|truncatewords:14 }}</p>#}
 
         <p class="card-text pdp-price_color_orange"><span>৳</span> {{ instance.price }}</p>
-{#        {{ instance.get_avg_rating }}#}
+        {#        {{ instance.get_avg_rating }}#}
 
         <p class="card-text pdp-price_color_orange">
-        {% with ''|center:instance.get_avg_rating as range %}
-            {% for _ in range %}
-            <span>⭐</span>
-                {% empty %}
-                No review
-            {% endfor %}
-        {% endwith %}
+            {% if instance.get_avg_rating %}
+                {% with ''|center:instance.get_avg_rating as range %}
+                    {% for _ in range %}
+                        <span>⭐</span>
+                    {% empty %}
+                        No review
+                    {% endfor %}
+                {% endwith %}
+            {% endif %}
 
             ({{ instance.review_set.all.count }})</p>
         <!--  <a href="{% url 'products:detail' slug=instance.slug  %}" class="btn btn-warning">URL shortcut</a> -->
